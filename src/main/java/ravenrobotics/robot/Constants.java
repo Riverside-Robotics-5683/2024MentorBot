@@ -133,4 +133,52 @@ public class Constants
             kBackLeftOffset,
             kBackRightOffset);
     }
+    public static class VisionConstants{
+        public static final String kCameraName = "ravenVision";
+        // Constants such as camera and target height stored. Change per robot and goal!
+
+        //TODO: Should target height be offset to top or center? Target is 6.5 square. 
+
+        //Current heights are to bottom edge.Stage: 48.88, Amp 50.13, Speaker 53.88, Source 4.125
+        public static final double kCameraHeight = Units.inchesToMeters(24);
+        public static final double kTargetHeightAmp = Units.feetToMeters(50.13);
+        public static final double kTargetHeightSpeaker = Units.feetToMeters(53.88);
+
+        //TODO: Do we want to line up on source or stage?
+        
+        //public static final double kTargetHeightStage = Units.feetToMeters(48.88); 
+        //public static final double kTaargetSource = Units.feetToMeters(4.125);
+
+        // Angle between horizontal and the camera.
+        public static final double kCameraPitchAngle = Units.degreesToRadians(0);
+
+        // How far from the targets we want to be
+        public static final double kGoalRangeAmp = Units.feetToMeters(3);
+        public static final double kGoalRangeSpeaker = Units.feetToMeters(3);
+
+        // AprilTagIds
+
+        //Right and Left from Driver's viewpoint
+        /////BLUE ID'S/////
+        public static final int kBlueAmpID = 6;
+        public static final int kBlueCSpeakerID = 7;
+        //public static final int kBlueRSrcID = 1;
+        //public static final int kBlueLSrcID = 2;
+        //public static final int kBlueRSpeakerID = 8;
+        //public static final int kBlueStageCID = 14;
+        //public static final int kBlueStageRID = 16;
+        //public static final int kBlueStageLID = 15;
+          
+        /////RED ID'S/////
+        public static final int kRedCSpeakerID = 4;
+        public static final int kRedAmpID = 5;
+        
+        //public static final int kRedRSpeakerID = 3;
+        //public static final int kRedRSrcID = 9;
+        //public static final int kRedLSrcID = 10;
+        //public static final int kRedStageCID = 13;
+        //public static final int kRedStageRID = 12;
+        //public static final int kRedStageLID = 14;
+      
+    }
 }

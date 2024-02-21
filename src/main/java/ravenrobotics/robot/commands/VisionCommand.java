@@ -5,11 +5,14 @@
 package ravenrobotics.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import ravenrobotics.robot.subsystems.MecDriveSubsystem;
+import ravenrobotics.robot.subsystems.VisionSubsystem;
 
 public class VisionCommand extends Command {
   /** Creates a new VisionCommand. */
-  public VisionCommand() {
+  public VisionCommand(VisionSubsystem visionSubsystem, MecDriveSubsystem mecDriveSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(visionSubsystem, mecDriveSubsystem);
   }
 
   // Called when the command is initially scheduled.

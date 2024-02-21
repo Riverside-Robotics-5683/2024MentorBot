@@ -26,9 +26,9 @@ public class MecDriveCommand extends Command {
 
   /** Creates a new MecDriveCommand. */
   public MecDriveCommand(DoubleSupplier strafe, 
-  DoubleSupplier forward, DoubleSupplier twist, 
-  DoubleSupplier throttle, BooleanSupplier isFieldRelative, 
-  MecDriveSubsystem mecDriveSubsystem){
+    DoubleSupplier forward, DoubleSupplier twist, 
+    DoubleSupplier throttle, BooleanSupplier isFieldRelative, 
+    MecDriveSubsystem mecDriveSubsystem){
 
     //Initialize subsystem
     this.mecDriveSubsystem = mecDriveSubsystem;
