@@ -1,7 +1,7 @@
 package ravenrobotics.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import ravenrobotics.robot.subsystems.IntakeSubsystem;
-import ravenrobotics.robot.subsystems.IntakeSubsystem.IntakeArmPosition;
+import ravenrobotics.robot.Constants.IntakeConstants;
 
 public class RunIntakeCommand extends Command {
     private final IntakeSubsystem intakeSubsystem;
@@ -16,7 +16,7 @@ public class RunIntakeCommand extends Command {
     @Override
     public void initialize(){
         //deploy arm if retracted
-        if(intakeSubsystem.isRetracted()){intakeSubsystem.setIntakePosition(IntakeArmPosition.kDeployed);}
+        if(intakeSubsystem.isRetracted()){intakeSubsystem.setIntakePosition(IntakeConstants.IntakeArmPosition.kDeployed);}
     }
 
     @Override
@@ -36,6 +36,6 @@ public class RunIntakeCommand extends Command {
     {
         //stop rollers and retract arm when intake routine is complete
         intakeSubsystem.stopRollers();
-        intakeSubsystem.setIntakePosition(IntakeArmPosition.kRetracted);
+        intakeSubsystem.setIntakePosition(IntakeConstants.IntakeArmPosition.kRetracted);
     }
 }

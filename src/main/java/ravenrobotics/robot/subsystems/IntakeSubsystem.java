@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import ravenrobotics.robot.Constants.IntakeConstants;
+import ravenrobotics.robot.Constants.IntakeConstants.IntakeArmPosition;
 
 public class IntakeSubsystem extends SubsystemBase {
     //Roller motor and encoder.
@@ -31,8 +32,6 @@ public class IntakeSubsystem extends SubsystemBase {
     private final Rev2mDistanceSensor distanceSensorMXP = new Rev2mDistanceSensor(Port.kMXP);
     //private final Rev2mDistanceSensor distanceSensorOnboard = new Rev2mDistanceSensor(Port.kOnboard);
     
-    //enums for deployed and retracted arm position
-    public enum IntakeArmPosition {kDeployed,kRetracted}
 
     //Subsystem for controlling the intake on the robot.
     public IntakeSubsystem()

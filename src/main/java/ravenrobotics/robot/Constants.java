@@ -84,6 +84,8 @@ public class Constants
         public static final double kRollerFF = 1.0;
         public static final double kRollerSetpoint = 4000;
         public static final double kNoteInDistance = 6;
+        //enums for deployed and retracted arm position
+        public static enum IntakeArmPosition {kDeployed,kRetracted}
     }
 
     //Constants for the flywheel.
@@ -135,8 +137,7 @@ public class Constants
     }
     public static class VisionConstants{
         public static final String kCameraName = "ravenVision";
-        // Constants such as camera and target height stored. Change per robot and goal!
-
+        //Constants such as camera and target height stored. Change per robot and goal!
         //TODO: Should target height be offset to top or center? Target is 6.5 square. 
 
         //Current heights are to bottom edge.Stage: 48.88, Amp 50.13, Speaker 53.88, Source 4.125
@@ -180,5 +181,7 @@ public class Constants
         //public static final int kRedStageRID = 12;
         //public static final int kRedStageLID = 14;
       
+        //TODO: Update check to include more vision targets if needed.
+        public static enum ValidTarget{NONE, BLUE_AMP, RED_AMP, BLUE_SPEAKER, RED_SPEAKER} 
     }
 }

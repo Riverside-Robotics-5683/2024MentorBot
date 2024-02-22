@@ -4,6 +4,8 @@
 
 package ravenrobotics.robot;
 
+import java.util.Optional;
+//import java.util.OptionalInt;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,9 +17,12 @@ import ravenrobotics.robot.Constants.DriverStationConstants;
 import ravenrobotics.robot.commands.MecDriveCommand;
 import ravenrobotics.robot.commands.RunFlywheelCommand;
 import ravenrobotics.robot.commands.RunIntakeCommand;
+import ravenrobotics.robot.commands.VisionCommand;
 import ravenrobotics.robot.subsystems.*;
-import ravenrobotics.robot.subsystems.IntakeSubsystem.IntakeArmPosition;
+import ravenrobotics.robot.Constants.IntakeConstants.IntakeArmPosition;
 import ravenrobotics.robot.util.Telemetry;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class RobotContainer 
 {
@@ -25,7 +30,7 @@ public class RobotContainer
   private final MecDriveSubsystem mecDriveSubsystem = new MecDriveSubsystem();
   private final FlywheelSubsystem flyWheelSubsystem = new FlywheelSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-
+  private final VisionSubsystem visionSubsystem = new VisionSubsystem();
   //Driver controller (drives the robot around).
   private final CommandJoystick driverJoystick = new CommandJoystick(DriverStationConstants.kDriverPort);
   
@@ -35,6 +40,12 @@ public class RobotContainer
 
   //Whether to drive field relative or not.
   public boolean isFieldRelative = false;
+  //Get alliance color (red or blue) from FMS
+  private Optional<Alliance> alliance = DriverStation.getAlliance();
+
+  //Get station id as int from FMS
+  //private OptionalInt station = DriverStation.getLocation();  
+
   private GenericEntry isFieldRelativeEntry = Telemetry.teleopTab.add("Field Relative", false).getEntry();
 
   private final SendableChooser<Command> teleopModeChooser = new SendableChooser<Command>();
@@ -69,8 +80,8 @@ public class RobotContainer
     //Set the buttons on the joystick to toggle field-relative
     driverJoystick.button(2).onTrue(new InstantCommand(() -> toggleFieldRelative()));
 
-    //TODO: Set the button on the joystick for aligning to AprilTag
-    //driverJoystick.button(3).whileTrue(new AlignToAprilTagCommand(visionSubsystem, mecDriveSubsystem));
+    //TODO: Set the button on the joystick for aligning to AprilTag and driving to range
+    driverJoystick.button(3).whileTrue(new VisionCommand(visionSubsystem, mecDriveSubsystem,intakeSubsystem, alliance));
     
     //Run Intake Command 
     driverJoystick.button(4).toggleOnTrue(new RunIntakeCommand(intakeSubsystem));
