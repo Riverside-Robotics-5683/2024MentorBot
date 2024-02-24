@@ -107,11 +107,11 @@ public class MecDriveSubsystem extends SubsystemBase {
    * @param fieldRelative Whether the provided x and y speeds are relative to the field.
    */
   
-  public void drive(double strafe, double forward, double rotation, boolean fieldRelative) {
+  public void drive(double forward, double strafe, double rotation, boolean fieldRelative) {
     if (fieldRelative) {
-      m_drive.driveCartesian(strafe, forward, rotation, IMUSubsystem.getRotation2d());
+      m_drive.driveCartesian(forward, strafe, rotation, IMUSubsystem.getRotation2d());
     } else {
-      m_drive.driveCartesian(strafe, forward, rotation);
+      m_drive.driveCartesian(forward, strafe, rotation);
     }
   }
 

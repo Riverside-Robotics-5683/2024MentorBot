@@ -17,16 +17,16 @@ public class MecDriveCommand extends Command {
   /**
  * Command to drive the robot using joystick axes.
  * 
- * @param strafe The x axis for moving left/right.
- * @param forward The y axis for moving forward/backward.
- * @param rotation The z axis for rotating.
- * @param throttle The axis for controlling the max speed of the robot.
- * @param isFieldRelative The boolean for whether to drive field relative.
+  * @param xSpeed Speed of the robot in the x direction (forward/backwards).
+  * @param ySpeed Speed of the robot in the y direction (sideways).
+  * @param rot Angular rate of the robot.
+  * @param fieldRelative Whether the provided x and y speeds are relative to the field.
+  * @param mecDriveSubsystem Required Subsystem
  */
 
   /** Creates a new MecDriveCommand. */
-  public MecDriveCommand(DoubleSupplier strafe, 
-    DoubleSupplier forward, DoubleSupplier twist, 
+  public MecDriveCommand(DoubleSupplier forward, 
+    DoubleSupplier strafe, DoubleSupplier twist, 
     DoubleSupplier throttle, BooleanSupplier isFieldRelative, 
     MecDriveSubsystem mecDriveSubsystem){
 
@@ -34,11 +34,11 @@ public class MecDriveCommand extends Command {
     this.mecDriveSubsystem = mecDriveSubsystem;
     
     //Initialize boolean supplier (whether to drive field or robot relative)
-    this.isFieldRelative = isFieldRelative.getAsBoolean();
-    this.strafe = strafe;
     this.forward = forward;
+    this.strafe = strafe;
     this.rotation = twist;
     this.throttle = throttle;
+    this.isFieldRelative = isFieldRelative.getAsBoolean();
   
     //Add the subsystem as a requirement for the command, 
     //so the subsystem isn't being controlled by two different commands at once.
@@ -55,12 +55,12 @@ public class MecDriveCommand extends Command {
   @Override
   public void execute() {
     //Temp variables
-    Double maxSpeed, m_strafe, m_forward, m_rotation;
+    Double maxSpeed, m_forward, m_strafe, m_rotation;
     Boolean m_isFieldRelative;
 
     maxSpeed = this.throttle.getAsDouble();
-    m_strafe = this.strafe.getAsDouble();
     m_forward = this.forward.getAsDouble();
+    m_strafe = this.strafe.getAsDouble();
     m_rotation = this.rotation.getAsDouble();
     m_isFieldRelative = this.isFieldRelative.booleanValue();
 
@@ -73,12 +73,12 @@ public class MecDriveCommand extends Command {
 
     //TODO: Make these values constants for easy adjustment.
     //Account for controller deadband
-    if (Math.abs(m_strafe) < 0.03){m_strafe = 0.0;}
     if (Math.abs(m_forward) < 0.03){m_forward = 0.0;}
+    if (Math.abs(m_strafe) < 0.03){m_strafe = 0.0;}
     if (Math.abs(m_rotation) < 0.01){m_rotation = 0.0;}
     
     //drive with values
-    mecDriveSubsystem.drive(m_strafe, m_forward, m_rotation, m_isFieldRelative);
+    mecDriveSubsystem.drive(m_forward, m_strafe, m_rotation, m_isFieldRelative);
   }
 
   // Called once the command ends or is interrupted.

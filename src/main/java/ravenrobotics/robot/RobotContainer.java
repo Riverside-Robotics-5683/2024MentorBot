@@ -4,7 +4,6 @@
 
 package ravenrobotics.robot;
 
-import java.util.Optional;
 //import java.util.OptionalInt;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -21,8 +20,6 @@ import ravenrobotics.robot.commands.VisionCommand;
 import ravenrobotics.robot.subsystems.*;
 import ravenrobotics.robot.Constants.IntakeConstants.IntakeArmPosition;
 import ravenrobotics.robot.util.Telemetry;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class RobotContainer 
 {
@@ -40,20 +37,16 @@ public class RobotContainer
 
   //Whether to drive field relative or not.
   public boolean isFieldRelative = false;
-  //Get alliance color (red or blue) from FMS
-  private Optional<Alliance> alliance = DriverStation.getAlliance();
-
-  //Get station id as int from FMS
-  //private OptionalInt station = DriverStation.getLocation();  
 
   private GenericEntry isFieldRelativeEntry = Telemetry.teleopTab.add("Field Relative", false).getEntry();
 
   private final SendableChooser<Command> teleopModeChooser = new SendableChooser<Command>();
 
   //Main drive command.
-  private final MecDriveCommand mecDriveCommand = new MecDriveCommand(
-    () -> -driverJoystick.getX(),
+  //TODO check controller getY is forward right?
+  private final MecDriveCommand mecDriveCommand = new MecDriveCommand(   
     () -> -driverJoystick.getY(),
+    () -> -driverJoystick.getX(),
     () -> -driverJoystick.getZ(),
     () -> -driverJoystick.getThrottle(),
     () -> isFieldRelative, 
@@ -71,7 +64,7 @@ public class RobotContainer
     configureBindings();
     mecDriveSubsystem.setDefaultCommand(mecDriveCommand);
   }
-
+  
   private void configureBindings()
   {
     // Shooting: parallel command to run intake rollers and flywheel while trigger held 
@@ -81,7 +74,7 @@ public class RobotContainer
     driverJoystick.button(2).onTrue(new InstantCommand(() -> toggleFieldRelative()));
 
     //TODO: Set the button on the joystick for aligning to AprilTag and driving to range
-    driverJoystick.button(3).whileTrue(new VisionCommand(visionSubsystem, mecDriveSubsystem,intakeSubsystem, alliance));
+    driverJoystick.button(3).whileTrue(new VisionCommand(visionSubsystem, mecDriveSubsystem,intakeSubsystem));
     
     //Run Intake Command 
     driverJoystick.button(4).toggleOnTrue(new RunIntakeCommand(intakeSubsystem));
